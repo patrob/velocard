@@ -1,0 +1,30 @@
+import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+@Component({
+  selector: 'app-card',
+  standalone: true,
+  imports: [RouterLink],
+  template: ` <div class="card">
+    <div class="card-body">
+      @if (title) {
+        <h5 class="card-title">{{ title }}</h5>
+      }
+      <div #ref>
+        <ng-content />
+      </div>
+      @if (ref.childNodes.length === 0) {
+        <p class="card-text">No content</p>
+      }
+      @if (routerLink && routerLinkText) {
+        <a [routerLink]="routerLink" class="btn btn-primary">{{ routerLinkText }}</a>
+      }
+    </div>
+  </div>`,
+  styles: ``,
+})
+export class CardComponent {
+  @Input() title?: string;
+  @Input() routerLink?: string;
+  @Input() routerLinkText?: string;
+}
