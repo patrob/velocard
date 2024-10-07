@@ -31,6 +31,4 @@ import { Component } from '@angular/core';
   `,
   styles: ``,
 })
-export class HeaderComponent {
-  constructor() {}
-}
+export class HeaderComponent {}
