@@ -4,11 +4,12 @@ import { CardComponent } from '../../../shared/layout/card/card.component';
 import { ExpenseFormComponent } from './expense-form/expense-form.component';
 import { CurrencyPipe, JsonPipe } from '@angular/common';
 import { ExpenseListItemComponent } from './expense-list-item/expense-list-item.component';
+import { ExpenseListTotalsComponent } from './expense-list-totals/expense-list-totals.component';
 
 @Component({
   selector: 'app-expense-list',
   standalone: true,
-  imports: [CardComponent, ExpenseFormComponent, ExpenseListItemComponent, CurrencyPipe],
+  imports: [CardComponent, ExpenseFormComponent, ExpenseListItemComponent, CurrencyPipe, ExpenseListTotalsComponent],
   template: `
     <ul class="list-group">
       @for (expense of expenses(); track expense.id) {
@@ -33,19 +34,15 @@ import { ExpenseListItemComponent } from './expense-list-item/expense-list-item.
           <app-expense-form (addExpense)="addExpense($event)"></app-expense-form>
         </li>
       } @else {
-        <li class="list-group-item">
+        <li class="list-group-item d-flex flex-row justify-content-end">
           <a class="btn btn-outline-primary" (click)="beginAdding()"><i class="bi bi-plus-circle"></i></a>
         </li>
       }
-      <li class="list-group-item">
-        <div>Total {{ expenseStore.totalExpense() | currency }}</div>
-      </li>
-      <li class="list-group-item">
-        <div>Total Chargeable {{ expenseStore.totalChargeableExpense() | currency }}</div>
-      </li>
-      <li class="list-group-item">
-        <div>Total Non-Chargeable {{ expenseStore.totalNonChargeableExpense() | currency }}</div>
-      </li>
+      <app-expense-list-totals
+        [totalExpense]="expenseStore.totalExpense()"
+        [totalChargeableExpense]="expenseStore.totalChargeableExpense()"
+        [totalNonChargeableExpense]="expenseStore.totalNonChargeableExpense()"
+      />
     </ul>
   `,
   styles: ``,
