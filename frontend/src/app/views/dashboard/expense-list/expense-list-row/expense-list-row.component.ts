@@ -10,12 +10,14 @@ import { Expense } from '../expense-store';
   template: `
     @if (expense.isEditing) {
       <app-expense-form
+        data-cy="expense-form"
         [expense]="expense"
         (updateExpense)="updateExpense.emit($event)"
         (cancel)="cancel.emit(expense.id)"
       ></app-expense-form>
     } @else {
       <app-expense-list-item
+        data-cy="expense-list-item"
         [expense]="expense"
         (beginEditing)="beginEditing.emit($event)"
         (removeExpense)="removeExpense.emit($event)"

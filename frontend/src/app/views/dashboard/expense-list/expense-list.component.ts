@@ -21,7 +21,7 @@ import { ExpenseListAddComponent } from './expense-list-add/expense-list-add.com
     ExpenseListRowComponent,
   ],
   template: `
-    <ul class="list-group">
+    <ul data-cy="expense-list" class="list-group">
       @for (expense of expenses(); track expense.id) {
         <li class="list-group-item" id="expense-list-item-{{ expense.id }}">
           <app-expense-list-row

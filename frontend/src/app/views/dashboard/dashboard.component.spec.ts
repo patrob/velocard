@@ -1,23 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
+import { render } from '@testing-library/angular';
+import { ExpenseListComponent } from './expense-list/expense-list.component';
+import { MockComponent } from 'ng-mocks';
+import { CardComponent } from '../../shared/layout/card/card.component';
 
 describe('DashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+  const setup = async () => {
+    return await render(DashboardComponent, {
+      imports: [MockComponent(ExpenseListComponent), CardComponent],
+    });
+  };
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [DashboardComponent]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(DashboardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  test('should render the card', async () => {
+    const { getByTestId } = await setup();
+    expect(getByTestId('card-title')).toHaveTextContent('Expenses');
   });
 });

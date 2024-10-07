@@ -1,13 +1,13 @@
-import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
-import { HeaderComponent } from "./shared/layout/header/header.component";
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './shared/layout/header/header.component';
 
 @Component({
-  selector: "app-root",
+  selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, HeaderComponent],
   template: `
-    <app-header></app-header>
+    <app-header data-cy="app-header"></app-header>
     <div class="container-fluid">
       <router-outlet></router-outlet>
     </div>
@@ -15,4 +15,3 @@ import { HeaderComponent } from "./shared/layout/header/header.component";
   styles: [],
 })
 export class AppComponent {}
-

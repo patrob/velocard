@@ -6,15 +6,15 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [CurrencyPipe],
   template: `<li class="list-group-item">
-      <div>Total {{ totalExpense | currency }}</div>
+      <div data-cy="total-amount">Total {{ totalExpense | currency }}</div>
     </li>
     <li class="list-group-item">
-      <div>Total Chargeable {{ totalChargeableExpense | currency }}</div>
+      <div data-cy="total-chargeable-amount">Total Chargeable {{ totalChargeableExpense | currency }}</div>
     </li>
     <li class="list-group-item">
-      <div>Total Non-Chargeable {{ totalNonChargeableExpense | currency }}</div>
+      <div data-cy="total-nonchargeable-amount">Total Non-Chargeable {{ totalNonChargeableExpense | currency }}</div>
     </li>`,
-  styles: [],
+  styles: ``,
 })
 export class ExpenseListTotalsComponent {
   @Input() totalExpense: number = 0;

@@ -8,16 +8,16 @@ import { RouterLink } from '@angular/router';
   template: ` <div class="card">
     <div class="card-body">
       @if (title) {
-        <h5 class="card-title">{{ title }}</h5>
+        <h5 data-cy="card-title" class="card-title">{{ title }}</h5>
       }
-      <div #ref>
+      <div data-cy="card-content" #ref>
         <ng-content />
       </div>
       @if (ref.childNodes.length === 0) {
-        <p class="card-text">No content</p>
+        <p data-cy="card-text" class="card-text">No content</p>
       }
       @if (routerLink && routerLinkText) {
-        <a [routerLink]="routerLink" class="btn btn-primary">{{ routerLinkText }}</a>
+        <a data-cy="card-action" [routerLink]="routerLink" class="btn btn-primary">{{ routerLinkText }}</a>
       }
     </div>
   </div>`,
