@@ -12,6 +12,6 @@ import { HeaderComponent } from './shared/layout/header/header.component';
       <router-outlet></router-outlet>
     </div>
   `,
-  styles: [],
+  styles: ``,
 })
 export class AppComponent {}

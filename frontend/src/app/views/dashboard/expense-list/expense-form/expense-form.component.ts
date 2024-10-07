@@ -46,22 +46,7 @@ import { AsyncPipe, JsonPipe } from '@angular/common';
       </div>
     </div>
   `,
-  styles: `
-    input {
-      .expense-title {
-        max-width: 20rem;
-      }
-      .expense-type {
-        max-width: 18rem;
-      }
-      .expense-amount {
-        max-width: 12rem;
-      }
-    }
-    .expense-actions {
-      min-width: 10rem;
-    }
-  `,
+  styleUrls: ['./expense-form.component.scss'],
 })
 export class ExpenseFormComponent implements OnInit {
   @Input() expense?: Expense;
