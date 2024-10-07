@@ -9,8 +9,8 @@ import { AsyncPipe, JsonPipe } from '@angular/common';
   standalone: true,
   imports: [ReactiveFormsModule],
   template: `
-    <div class="form-group flex flex-row justify-content-between" [formGroup]="form">
-      <div class="input-group flex-nowrap">
+    <div class="form-group d-flex flex-row justify-content-between" [formGroup]="form">
+      <div class="input-group flex-nowrap expense-title m-1">
         <span class="input-group-text" id="expense-title-{{ expense?.id ?? 0 }}">Title</span>
         <input
           type="text"
@@ -20,36 +20,62 @@ import { AsyncPipe, JsonPipe } from '@angular/common';
           aria-label="Expense Title"
         />
       </div>
-      <div class="input-group flex-nowrap">
+      <div class="input-group flex-nowrap expense-amount m-1">
         <span class="input-group-text" id="expense-amount-{{ expense?.id ?? 0 }}">$</span>
         <input type="number" class="form-control" formControlName="amount" placeholder="Amount" aria-label="Amount" />
       </div>
-      <div class="input-group flex-nowrap">
-        <span class="input-group-text" id="expense-type-{{ expense?.id ?? 0 }}">Type</span>
-        <select class="form-select" aria-label="Expense Type">
-          <option value="NonChargeable" selected>Non-Chargeable</option>
-          <option value="Chargeable">Chargeable</option>
-        </select>
+      <div class="input-group flex-nowrap expense-type m-1">
+        <div class="input-group-text">
+          <input
+            class="form-check-input mt-0"
+            type="checkbox"
+            formControlName="type"
+            value=""
+            aria-label="Chargeable?"
+          />
+        </div>
+        <span class="input-group-text" id="expense-type-{{ expense?.id ?? 0 }}">Chargeable?</span>
       </div>
-      <div>
-        <a class="btn btn-outline-primary" (click)="saveExpense()" aria-label="Save"><i class="bi bi-floppy"></i></a>
-        <a class="btn btn-outline-secondary" (click)="cancel.emit()" aria-label="Cancel"
+      <div class="d-flex flex-row justify-content-end expense-actions">
+        <a class="btn btn-outline-primary m-1" (click)="saveExpense()" aria-label="Save"
+          ><i class="bi bi-floppy"></i
+        ></a>
+        <a class="btn btn-outline-secondary m-1" (click)="cancel.emit()" aria-label="Cancel"
           ><i class="bi bi-x-circle"></i
         ></a>
       </div>
     </div>
   `,
-  styles: ``,
+  styles: `
+    input {
+      .expense-title {
+        max-width: 20rem;
+      }
+      .expense-type {
+        max-width: 18rem;
+      }
+      .expense-amount {
+        max-width: 12rem;
+      }
+    }
+    .expense-actions {
+      min-width: 10rem;
+    }
+  `,
 })
 export class ExpenseFormComponent implements OnInit {
   @Input() expense?: Expense;
   @Output() addExpense = new EventEmitter<Expense>();
   @Output() updateExpense = new EventEmitter<Expense>();
   @Output() cancel = new EventEmitter<void>();
+  readonly expensetypeOptions = [
+    { value: ExpenseType.NonChargeable, label: 'Non-Chargeable' },
+    { value: ExpenseType.Chargeable, label: 'Chargeable' },
+  ];
   form = new FormGroup({
     title: new FormControl<string>(this.expense?.title ?? '', Validators.required),
     amount: new FormControl<number>(this.expense?.amount ?? 0, [Validators.required, Validators.min(0)]),
-    type: new FormControl<ExpenseType>(this.expense?.type ?? ExpenseType.NonChargeable),
+    type: new FormControl<boolean>((this.expense?.type ?? ExpenseType.NonChargeable) === ExpenseType.Chargeable),
   });
 
   get formAsExpense(): Expense {
@@ -57,7 +83,7 @@ export class ExpenseFormComponent implements OnInit {
       id: this.expense?.id ?? 0,
       title: this.form.controls.title.value ?? '',
       amount: this.form.controls.amount.value ?? 0,
-      type: this.form.controls.type.value ?? ExpenseType.NonChargeable,
+      type: this.form.controls.type.value ? ExpenseType.Chargeable : ExpenseType.NonChargeable,
       isEditing: false,
     };
   }
@@ -66,7 +92,7 @@ export class ExpenseFormComponent implements OnInit {
     this.form.setValue({
       title: this.expense?.title ?? '',
       amount: this.expense?.amount ?? 0,
-      type: this.expense?.type ?? ExpenseType.NonChargeable,
+      type: (this.expense?.type ?? ExpenseType.NonChargeable) === ExpenseType.Chargeable,
     });
   }
 
