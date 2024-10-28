@@ -18,7 +18,7 @@
     "@angular/forms": "^18.1.0",
     "@angular/platform-browser": "^18.1.0",
     "@angular/platform-browser-dynamic": "^18.1.0",
-    "@angular/router": "^18.1.0",
+    "@angular/router": "^18.2.9",
     "@ng-bootstrap/ng-bootstrap": "^17.0.1",
     "@ngrx/signals": "^18.0.2",
     "@popperjs/core": "^2.11.8",
